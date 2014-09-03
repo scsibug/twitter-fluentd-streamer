@@ -26,6 +26,8 @@ class MyStreamer(TwythonStreamer):
         event.Event(tag,
                     event_contents,
                     time=tweet_time)
+        os.system("systemd-notify --status='Tweeting!'") 
+        os.system("systemd-notify WATCHDOG=1")
 
     def on_success(self, data):
         if 'friends' in data:
@@ -41,6 +43,7 @@ class MyStreamer(TwythonStreamer):
             print "got an unknown event:"
             print data
     def on_error(self, status_code, data):
+        os.system("systemd-notify --status='Got an error from Twitter'")
         print status_code
 
 stream = MyStreamer(os.environ.get('APP_KEY'),
