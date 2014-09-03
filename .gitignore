@@ -1,4 +1,4 @@
-publish_stream_env.sh
+publish.sh
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
