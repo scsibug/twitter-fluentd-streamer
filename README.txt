@@ -1,4 +1,4 @@
-This script will publish timeline and favorited tweets to a fluentd sink.
+This script will publish timeline, deleted, and favorited tweets to a fluentd sink.
 
 Set the following environment variables from a twitter dev account:
 
