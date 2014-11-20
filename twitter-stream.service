@@ -1,0 +1,20 @@
+[Unit]
+Description=Twitter Streaming to Fluentd
+
+[Service]
+ExecStart=/home/sensor-collector/twitter-fluentd-streamer/publish.sh
+WorkingDirectory=/home/sensor-collector/twitter-fluentd-streamer
+Restart=always
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=full
+NoNewPrivileges=true
+StandardOutput=syslog
+User=sensor-collector
+NotifyAccess=all
+#WatchdogSec=160
+#StartLimitBurst=4
+#StartLimitInterval=10min
+
+[Install]
+WantedBy=multi-user.target
