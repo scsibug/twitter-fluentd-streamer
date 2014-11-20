@@ -29,6 +29,16 @@ class MyStreamer(TwythonStreamer):
         os.system("systemd-notify --status='Tweeting!'") 
         os.system("systemd-notify WATCHDOG=1")
 
+    def save_tweet_md(self, tweet, tag):
+        print "saving tweet metadata"
+        event_contents = {
+                'tweet_id': tweet['delete']['status']['id_str'].encode('utf-8'),
+                'userid' : tweet['delete']['status']['user_id_str'].encode('utf-8'),
+                }
+        event.Event(tag, event_contents)
+        os.system("systemd-notify --status='Delete Event!'") 
+        os.system("systemd-notify WATCHDOG=1")
+
     def on_success(self, data):
         if 'friends' in data:
             print "got friends list, ignoring"
@@ -39,6 +49,9 @@ class MyStreamer(TwythonStreamer):
                 self.save_tweet(tweet, "scsibug.favorites")
         elif 'user' in data:
             self.save_tweet(data, "scsibug.timeline")
+        elif 'delete' in data:
+            print "got a delete!"
+            self.save_tweet_md(data, "scsibug.deletes")
         else:
             print "got an unknown event:"
             print data
